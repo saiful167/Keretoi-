@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Mobile Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      text-align: center;
+      padding: 2rem;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+    }
+    button {
+      background: #00ffcc;
+      border: none;
+      cursor: pointer;
+    }
+    .result-box {
+      margin-top: 20px;
+      padding: 20px;
+      background: #222;
+      display: none;
+      border: 1px solid #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔐 Student Contact Viewer</h1>
+  
+  <p>Enter Password:</p>
+  <input type="password" id="passwordInput" placeholder="Enter password" />
+  <br />
+  
+  <p>Enter Student Name:</p>
+  <input type="text" id="nameInput" placeholder="e.g. Tanisha" />
+  <button onclick="showNumber()">Show Number</button>
+
+  <div class="result-box" id="resultBox">
+    <h2>Student: <span id="studentName"></span></h2>
+    <p><strong>📞 Mobile Number:</strong> <span id="mobileNumber"></span></p>
+  </div>
+
+  <script>
+    const PASSWORD = "keretoi";
+    const contacts = {
+      "Tanisha": "01816344886",
+      "Titi": "01704470145",
+      "Marium": "01836802304",
+      "Faria": "01890755262",
+      "Amina": "01816271499",
+      "Rida": "01862911568",
+      "Nava": "01814874823",
+      "Rimi": "01817082695",
+      "Afla": "01821035002",
+      "Joi": "0819417198",
+      "Soha": "01711504436",
+      "Jomo": "01811902197",
+      "Asifa": "01325548872",
+      "Eti": "01708111245",
+      "Esrat": "01733949580",
+      "Mim": "01781814803",
+      "Nisa": "01889499838",
+      "Kadiza": "01716074745",
+      "Sabiha": "01611716679",
+      "Rani": "01724600398",
+      "Mehazabin": "01828150069",
+      "Tanha Amin": "01311130265",
+      "Samia": "01924947408",
+      "Afrin": "01771769051",
+      "Nishat": "01733949580",
+      "Ahona": "01838025480",
+      "Camppa": "01777525186",
+      "Israt": "01759975444",
+      "Farema": "01906772724",
+      "Jerin": "01672060486",
+      "Ribida": "01923662602",
+      "Morjina": "01746283405",
+      "Sabikun": "01880343063",
+      "Samiya": "01613832939",
+      "Somaiya": "01323956226",
+      "Noha": "01882001274",
+      "Lamiya": "01725141165",
+      "Jalpa": "01881077886",
+      "Taspia": "01737737825",
+      "Musfika": "01815077386",
+      "Sabrina": "01817050638",
+      "Aba": "01799643015",
+      "Rimi talu": "01604951012",
+      "Afsana": "01890476229",
+      "Fouzia": "01915982393",
+      "Tammanna": "01864783109",
+      "Soniya": "01865951370",
+      "Salma": "01851842533",
+      "Humayra": "01835500250",
+      "Jeba": "01818602688",
+      "Nadia": "01836888873",
+      "Maria": "01814319688",
+      "Shipa": "01818314801"
+    };
+
+    let wrongAttempts = 0;
+    let isLocked = false;
+
+    function showNumber() {
+      const password = document.getElementById("passwordInput").value.trim();
+      const name = document.getElementById("nameInput").value.trim();
+      const resultBox = document.getElementById("resultBox");
+
+      if (isLocked) {
+        alert("⛔ ৫ মিনিটের জন্য ব্লক করা হয়েছে! পরে আবার চেষ্টা করুন।");
+        return;
+      }
+
+      if (password !== PASSWORD) {
+        wrongAttempts++;
+        if (wrongAttempts >= 2) {
+          isLocked = true;
+          alert("🚫 ২ বার ভুল দিয়েছেন! এখন ৫ মিনিট পর চেষ্টা করুন।");
+          setTimeout(() => {
+            isLocked = false;
+            wrongAttempts = 0;
+            alert("✅ এখন আবার চেষ্টা করতে পারেন।");
+          }, 5 * 60 * 1000);
+        } else {
+          alert("❌ ভুল পাসওয়ার্ড! আর একবার ভুল করলে আপনি ৫ মিনিটের জন্য ব্লক হবেন।");
+        }
+        resultBox.style.display = "none";
+        return;
+      }
+
+      const number = contacts[name];
+      if (number) {
+        document.getElementById("studentName").innerText = name;
+        document.getElementById("mobileNumber").innerText = number;
+        resultBox.style.display = "block";
+      } else {
+        alert("📛 নাম পাওয়া যায়নি!");
+        resultBox.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
